@@ -25,9 +25,9 @@ RUN python -m venv /env && \
     chmod -R +x /scripts
 
 
-ENV PATH="/scripts:/env/bin:${PATH}"
+ENV PATH="/scripts:/env/bin:$PATH"
 USER rz
 
-CMD [ "/run.sh" ]
+CMD [ "run.sh" ]
 
 
