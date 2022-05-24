@@ -1,7 +1,7 @@
 from django.db import models
-from django.contrib.auth import get_user_model
 from .helpers.models import TrackingModel
-from django.contrib.auth.models import (PermissionsMixin,BaseUserManager,AbstractBaseUser,UserManager)
+from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import (PermissionsMixin, UserManager)
 from django.utils import timezone
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.validators import UnicodeUsernameValidator
@@ -33,7 +33,7 @@ class MyUserManager(UserManager):
         username = GlobalUserModel.normalize_username(username)
         user = self.model(username=username, email=email, **extra_fields)
         user.password = make_password(password)
-        user.save(using=self._db)
+        user.save()
         return user
 
     def create_user(self, username, email, password, **extra_fields):
@@ -51,15 +51,6 @@ class MyUserManager(UserManager):
             raise ValueError("Superuser must have is_superuser=True.")
 
         return self._create_user(username, email, password, **extra_fields)
-    
-    
-
-    @property
-    def is_staff(self):
-        "Is the user a member of staff?"
-        # Simplest possible answer: All admins are staff
-        return self.is_admin
-    
     
 
 class User(AbstractBaseUser,PermissionsMixin,TrackingModel):
