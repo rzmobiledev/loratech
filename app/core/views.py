@@ -16,8 +16,8 @@ class AuthUserAPIView(GenericAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     
     def get(self, request):
-        # user = request.user
-        # serializer = RegisterSerializer(user)
+        user = request.user
+        serializer = RegisterSerializer(user)
         return Response({'user': 'Hello, you are authorized'})
 
 class RegisterAPIView(GenericAPIView):
