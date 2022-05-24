@@ -41,3 +41,17 @@ FYI : This app is working and testing with minikube running on virtualbox driver
 9. check your app service by typing $kubectl get svc. copy your app service name, and type $minikube service your-app-service-name --url. 
 
 10. Copy the url you see on terminal and paste it to the browser. You should see the same Django app interface that you accessed locally in first step above
+
+
+# END POINT URL
+http://127.0.0.1/api/endpoint2 <---- Is an authentication token generator, which allows users to retrieve a new token every 60 seconds
+
+http://127.0.0.1/api/endpoint1 <---- Returns a response with plain text “hello” if a request is made with a valid token (present in the database).
+
+http://127.0.0.1/api/token/refresh <---- Refresh a new token
+
+http://127.0.0.1/api/register <----- Register a new account to gain access
+
+
+# Note
+Please use Postman to test this api
