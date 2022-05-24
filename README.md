@@ -8,15 +8,14 @@ Technical Assessment for Lora Technology
 
 2. After extract or clone, cd to project directory and open terminal from project directory
 
-3. Type docker-compose build, to build the image. Please wait until process is completed.
+3. Type docker-compose up, to build the image. Please wait until process is completed.
 
-4. When image is completed, Type docker-compose up to run installation of depedencies of the app with docker image
+4. when you see on terminal that database ready and gunicorn is ready as well, open browser and go to http://127.0.0.1. There you will find endpoints with documentation which you can consume for mobile app or other front end
 
-5. when you see on terminal that database ready and gunicorn is ready as well, open browser and go to http://127.0.0.1. There you will find endpoints which you can consume for mobile app or other front end
-
-6. If you want to gain access as root priviledges, stop terminal by pressing Ctrl + C on your keyboard, then type docker-compose run --rm django sh -c "python manage.py createsuperuser and hit enter. Next fill your username and password and hit enter
+5. If you want to gain access as root priviledges, stop terminal by pressing Ctrl + C on your keyboard, then type docker-compose run --rm django sh -c "python manage.py createsuperuser and hit enter. Next fill your username and password and hit enter
 
 7. to go to admin page, just type http://127.0.0.1/admin. Feel free to fill the form with your superuser credential that you created above
+
 
 # PUSHING TO KUBERNETES
 
