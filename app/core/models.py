@@ -101,6 +101,6 @@ class User(AbstractBaseUser,PermissionsMixin,TrackingModel):
 
     @property
     def token(self):
-        token = jwt.encode({'username':self.username, 'email': self.email, 'exp':datetime.utcnow() + timedelta(seconds=90)}, settings.SECRET_KEY, algorithm="HS256")
+        token = jwt.encode({'username':self.username, 'email': self.email, 'exp':datetime.now(tz=timezone.utc) + timedelta(seconds=90)}, settings.SECRET_KEY, algorithm="HS256")
         return token
 

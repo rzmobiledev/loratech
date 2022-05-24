@@ -1,7 +1,4 @@
-from django.shortcuts import render
 from django.contrib.auth import authenticate
-from django.contrib.auth.hashers import make_password
-from django.contrib.auth.hashers import check_password
 from django.contrib.auth.hashers import make_password
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
@@ -9,14 +6,19 @@ from rest_framework import status, permissions
 from .serializers import RegisterSerializer, LoginSerializer
 
 
+"""
+This is Endpoint 1 to welcome a user if 
+he/she passes the authorization. This endpoint 
+will welcome him/her with a plain text
+"""
 class AuthUserAPIView(GenericAPIView):
     
     permission_classes = (permissions.IsAuthenticated,)
     
     def get(self, request):
-        user = request.user
-        serializer = RegisterSerializer(user)
-        return Response({'user':serializer.data})
+        # user = request.user
+        # serializer = RegisterSerializer(user)
+        return Response({'user': 'Hello, you are authorized'})
 
 class RegisterAPIView(GenericAPIView):
     serializer_class = RegisterSerializer
@@ -30,6 +32,11 @@ class RegisterAPIView(GenericAPIView):
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+
+"""
+This is only for testing purpose and not being used
+inside api endpoint
+"""
 class LoginAPIView(GenericAPIView):
     
     serializer_class = LoginSerializer
@@ -38,7 +45,6 @@ class LoginAPIView(GenericAPIView):
         email = request.data.get('email', None)
         password = request.data.get('password', None)
         user = authenticate(email=email, password=password)
-        print(user)
 
         if user:
             serializers = self.serializer_class(user)
