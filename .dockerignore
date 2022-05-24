@@ -19,4 +19,5 @@ venv/
 
 #Local PotsgreSql data
 data/
-
+htmlcov/
+.coverage

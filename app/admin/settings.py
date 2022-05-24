@@ -32,7 +32,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'core'
+    'rest_framework_simplejwt',
+    'drf_yasg',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -133,3 +135,14 @@ STATIC_ROOT = '/vol/web/media/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Rest Framework authentication scheme
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ]
+}
+
+
+#Push Django to use customer user authentication
+AUTH_USER_MODEL='core.User'

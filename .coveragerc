@@ -1,0 +1,7 @@
+[run]
+source=admin/,core/,
+omit=
+    venv
+    */migrations/*
+    */test/*
+    */__init__.py

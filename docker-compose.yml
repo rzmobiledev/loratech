@@ -23,15 +23,13 @@ services:
       - SECRET_KEY=${SECRET_KEY}
       - ALLOWED_HOSTS=${ALLOWED_HOSTS}
       - DEBUG=1
-      - SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
-      - SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}
-      - SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD}
     depends_on:
       - db
 
   
   db:
     image: postgres:alpine3.15
+    restart: always
     volumes:
       - postgres-data:/vol/lib/postgresql/data
     environment:
