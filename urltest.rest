@@ -1,4 +1,4 @@
-POST http://127.0.0.1/auth/register
+POST http://0.0.0.0/api/endpoint2
 Content-Type: application/json
 
 {
