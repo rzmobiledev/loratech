@@ -3,10 +3,13 @@ from django.contrib.auth import get_user_model
 from .helpers.models import TrackingModel
 from django.contrib.auth.models import (PermissionsMixin,BaseUserManager,AbstractBaseUser,UserManager)
 from django.utils import timezone
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.apps import apps
-from django.contrib.auth.hashers import make_password
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
+import jwt
+from datetime import datetime, timedelta
 
 #add new properties access token, email verified
 # use email and password instead of username/password
@@ -24,9 +27,6 @@ class MyUserManager(UserManager):
             raise ValueError("The given email must be set")
 
         email = self.normalize_email(email)
-        # Lookup the real model class from the global app registry so this
-        # manager method can be used in migrations. This is fine because
-        # managers are by definition working on the real model.
         GlobalUserModel = apps.get_model(
             self.model._meta.app_label, self.model._meta.object_name
         )
@@ -36,12 +36,12 @@ class MyUserManager(UserManager):
         user.save(using=self._db)
         return user
 
-    def create_user(self, username, email, password=None, **extra_fields):
+    def create_user(self, username, email, password, **extra_fields):
         extra_fields.setdefault("is_staff", False)
         extra_fields.setdefault("is_superuser", False)
         return self._create_user(username, email, password, **extra_fields)
 
-    def create_superuser(self, username, email, password=None, **extra_fields):
+    def create_superuser(self, username, email, password, **extra_fields):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
 
@@ -51,6 +51,16 @@ class MyUserManager(UserManager):
             raise ValueError("Superuser must have is_superuser=True.")
 
         return self._create_user(username, email, password, **extra_fields)
+    
+    
+
+    @property
+    def is_staff(self):
+        "Is the user a member of staff?"
+        # Simplest possible answer: All admins are staff
+        return self.is_admin
+    
+    
 
 class User(AbstractBaseUser,PermissionsMixin,TrackingModel):
     username_validator = UnicodeUsernameValidator()
@@ -100,4 +110,6 @@ class User(AbstractBaseUser,PermissionsMixin,TrackingModel):
 
     @property
     def token(self):
-        pass
+        token = jwt.encode({'username':self.username, 'email': self.email, 'exp':datetime.utcnow() + timedelta(seconds=90)}, settings.SECRET_KEY, algorithm="HS256")
+        return token
+

@@ -1,5 +1,5 @@
-post http://127.0.0.1/auth/register/
-Accept: application/json
+POST http://127.0.0.1/auth/register
+Content-Type: application/json
 
 {
     "email":"",
